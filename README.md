@@ -1,36 +1,75 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# SpendPilot
 
-## Getting Started
+SpendPilot is an AI-powered SaaS platform that helps companies audit and optimize their AI tooling expenses. By analyzing current subscriptions against a deterministic rules engine and leveraging generative AI, SpendPilot provides actionable recommendations to downgrade, consolidate, and save on software costs.
 
-First, run the development server:
+## Features
 
-```bash
+- **Dynamic Audit Form:** React Hook Form + Zod + Zustand for a seamless, multi-step entry of your tech stack.
+- **Deterministic Audit Engine:** Rule-based TypeScript engine that calculates true costs (accounting for minimum seats and annual multipliers).
+- **Interactive Dashboard:** Beautiful Recharts data visualization comparing Current vs. Proposed spend.
+- **Lead Capture & DB:** Prisma + Postgres backend to securely save reports and capture high-intent emails.
+- **AI Executive Summary:** Streaming generative AI via Vercel AI SDK to explain savings opportunities.
+- **Public Shareable Links:** Server-rendered public reports with dynamic OpenGraph meta tags for viral sharing.
+- **CI/CD:** GitHub Actions configured for Jest testing, ESLint, and Next.js builds.
+
+## Tech Stack
+
+- **Framework:** Next.js 15 (App Router)
+- **Styling:** Tailwind CSS, shadcn/ui, Framer Motion
+- **Database:** PostgreSQL, Prisma ORM
+- **State Management:** Zustand
+- **Forms:** React Hook Form, Zod
+- **AI:** Vercel AI SDK, OpenAI (`gpt-4o-mini`)
+- **Testing:** Jest, React Testing Library
+
+## Getting Started Locally
+
+### 1. Clone & Install Dependencies
+\`\`\`bash
+npm install
+\`\`\`
+
+### 2. Configure Environment Variables
+Create a \`.env\` file in the root directory:
+\`\`\`env
+# Database connection (Use Neon, Supabase, or a local Postgres instance)
+DATABASE_URL="postgresql://user:password@localhost:5432/spendpilot?schema=public"
+
+# OpenAI API Key for the Executive Summary generation
+OPENAI_API_KEY="sk-your-openai-api-key"
+
+# (Optional) Resend API Key for transactional emails
+RESEND_API_KEY="re_your-resend-api-key"
+\`\`\`
+
+### 3. Setup the Database
+Push the Prisma schema to your Postgres database:
+\`\`\`bash
+npx prisma db push
+npx prisma generate
+\`\`\`
+
+### 4. Run the Development Server
+\`\`\`bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+\`\`\`
+Visit \`http://localhost:3000\` to start your audit.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Testing
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Run the Jest test suite for the deterministic audit engine:
+\`\`\`bash
+npm run test
+\`\`\`
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Deployment to Vercel
 
-## Learn More
+1. Push your code to a GitHub repository.
+2. Go to [Vercel](https://vercel.com) and import the repository.
+3. In the Vercel dashboard, add your Environment Variables (\`DATABASE_URL\`, \`OPENAI_API_KEY\`).
+4. (Optional) If using Vercel Postgres, Vercel will automatically configure the \`POSTGRES_URL\`. Ensure your \`prisma.config.ts\` points to it.
+5. Click **Deploy**. Vercel will automatically run \`npm run build\` and deploy the application globally.
 
-To learn more about Next.js, take a look at the following resources:
+## License
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+MIT
